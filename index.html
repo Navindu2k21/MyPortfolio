@@ -20,6 +20,15 @@
       overflow-x: hidden;
     }
 
+    #splash.show {
+  animation: splashZoomOut 1s forwards;
+}
+
+@keyframes splashZoomOut {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
     .gradient-text {
       background: linear-gradient(90deg, #8b5cf6, #3b82f6);
       -webkit-background-clip: text;
@@ -178,16 +187,16 @@
   <script>
     // Splash fade
     setTimeout(() => {
-      const splash = document.getElementById('splash');
-      splash.style.transition = "opacity 0.5s ease";
-      splash.style.opacity = 0;
-      setTimeout(() => {
-        splash.style.display = 'none';
-        document.querySelectorAll('.home-text').forEach(el => el.classList.add('show'));
-        AOS.init({ duration: 1000, once: true, mirror: false });
-        startTyping();
-      }, 500);
-    }, 2000);
+  const splash = document.getElementById('splash');
+  splash.classList.add('show'); 
+  setTimeout(() => {
+    splash.style.display = 'none';
+    document.querySelectorAll('.home-text').forEach(el => el.classList.add('show'));
+    AOS.init({ duration: 1000, once: true, mirror: false });
+    startTyping();
+  }, 1000); 
+}, 2000);
+
 
     // Typing effect
     const typingText = "Backend Developer";
@@ -262,7 +271,7 @@
             <p>${p.desc}</p>
           </div>`;
       });
-      portfolioContent.className = "grid grid-cols-2 gap-6";
+      portfolioContent.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6";
       AOS.refresh();
     }
 
@@ -272,11 +281,10 @@
       certificates.forEach(c=>{
         portfolioContent.innerHTML += `
           <div class="flex items-center justify-center" data-aos="fade-up">
-            <img src="${c.img}" alt="${c.title}" 
-                 class="w-full h-48 object-contain rounded shadow-lg transition-transform duration-300 hover:scale-105">
+            <img src="${c.img}" alt="${c.title}" class="w-full h-auto object-contain rounded shadow-lg transition-transform duration-300 hover:scale-105">
           </div>`;
       });
-      portfolioContent.className = "grid grid-cols-3 gap-6";
+      portfolioContent.className = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6";
       AOS.refresh();
     }
 
@@ -290,7 +298,7 @@
                  class="w-20 h-20 object-contain transition-transform duration-300 hover:scale-110">
           </div>`;
       });
-      portfolioContent.className = "grid grid-cols-5 gap-6";
+      portfolioContent.className = "grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-6";
       AOS.refresh();
     }
 
@@ -320,11 +328,13 @@
     }
     animateCube();
     function resizeRenderer() {
-      const container = document.getElementById('threejs-container');
-      renderer.setSize(container.clientWidth, 400);
-      camera.aspect = container.clientWidth / 400;
-      camera.updateProjectionMatrix();
-    }
+  const container = document.getElementById('threejs-container');
+  const width = container.clientWidth;
+  const height = width < 500 ? width * 0.8 : 400; // scale height on small screens
+  renderer.setSize(width, height);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+}
     window.addEventListener('resize', resizeRenderer);
     resizeRenderer();
 
