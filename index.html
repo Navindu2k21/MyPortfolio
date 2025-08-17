@@ -111,10 +111,11 @@
 
   <!-- Home -->
   <section id="home" class="min-h-screen flex flex-col md:flex-row items-center justify-between px-10 pt-24 transition-opacity duration-1000">
-    <div class="w-full md:w-1/2 space-y-6">
-      <h1 class="text-5xl font-bold home-text">
+    <div class="w-full md:w-1/2 flex flex-col flex-wrap items-start">
+      <h1 class="text-5xl font-bold home-text max-w-xs sm:max-w-md break-words">
         <span class="typing" id="typing-text"></span>
       </h1>
+
       <p class="text-lg home-text">I build server-side solutions and web apps with creativity and efficiency.</p>
       <div class="space-x-4 mt-4 home-text">
         <a href="#portfolio" class="hover-gradient">Projects</a>
@@ -199,7 +200,7 @@
 
 
     // Typing effect
-    const typingText = "Backend Developer";
+    const typingText = window.innerWidth < 500 ? "Backend Dev" : "Backend Developer";
     let index = 0;
     const el = document.getElementById("typing-text");
     function startTyping() {
